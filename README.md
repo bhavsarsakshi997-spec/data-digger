@@ -2,124 +2,159 @@
 
 # 🗄️ Data Digger — E-Commerce Database Management System
 
-**Data Digger** is a structured relational database project designed to demonstrate the core concepts of Relational Database Management Systems (RDBMS) in an E-Commerce environment. The system models a digital marketplace by systematically organizing customer data, product catalogs, transactional orders, and line-item details.
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white)
+![Database](https://img.shields.io/badge/Database-Design-blue?style=for-the-badge)
+
+**Data Digger** is an enterprise-grade relational database design developed to demonstrate core principles of Relational Database Management Systems (RDBMS) within an E-Commerce domain. The system models an online marketplace by structuring customer data, inventory catalogs, orders, and transactional line items into normalized tables.
 
 ---
 
-## 📌 Project Overview
+## 📌 Project Overview & Purpose
 
-In a modern E-Commerce ecosystem, managing transactional data efficiently is critical for maintaining order processing accuracy, tracking inventory levels, and generating business intelligence. **Data Digger** structures raw business information into normalized entities to prevent data redundancy and maintain strong referential integrity.
+In a modern digital marketplace, maintaining data consistency, preventing redundancy, and extracting real-time business insights are critical. **Data Digger** establishes a normalized relational architecture that ensures data integrity while supporting scalable transaction processing.
 
-### Key Objectives
-* **Relational Schema Design:** Structure complex E-Commerce entities into individual normalized tables.
-* **Data Integrity & Relationships:** Establish parent-child links using Primary Keys and Foreign Keys.
-* **Core Operations:** Demonstrate data life cycle management through CRUD (Create, Read, Update, Delete) operations.
-* **Business Analytics:** Execute aggregate computations to generate key business performance indicators.
-
----
-
-## 🗂️ Core Database Architecture & Tables
-
-The database model consists of four core relational tables:
-
-### 1. Customers Table
-Stores identity, demographic, and contact information for shoppers registered on the platform.
-* **Key Attributes:** Customer Identifier, Customer Name, Email Address, Physical Address.
-* **Role:** Uniquely identifies users and forms the primary entity for tracking purchase histories.
-
-<p align="center">
-  <img width="850" alt="Customers Table Overview" src="https://github.com/user-attachments/assets/8ee44239-b4bf-49be-a353-a1aa46e52e09" />
-</p>
+### Key Learning & Architectural Objectives:
+* **Relational Schema Design:** Structuring dynamic E-Commerce entities into 3rd Normal Form (3NF) tables.
+* **Integrity Constraints:** Enforcing structural rules using Primary Keys (PK), Foreign Keys (FK), and NOT NULL constraints.
+* **Data Lifecycle Operations:** Demonstrating complete CRUD (Create, Read, Update, Delete) transactional dynamics.
+* **Business Intelligence Analytics:** Applying aggregate expressions to compute platform sales metrics and operational summaries.
 
 ---
 
-### 2. Orders Table
-Captures high-level transaction data for every purchase placed on the platform.
-* **Key Attributes:** Order Identifier, Customer Identifier (Foreign Key), Order Placement Date, Total Transaction Amount.
-* **Role:** Links financial transactions back to specific customers while tracking order timestamps and total spend.
+## 🧠 Core Relational Database Concepts Covered
 
-<p align="center">
-  <img width="600" alt="Orders Table Overview" src="https://github.com/user-attachments/assets/7a780568-802c-40b7-8127-a8d57d89e7bb" />
-</p>
+* **Database Normalization (3NF):** Elimination of insertion, update, and deletion anomalies by separating entity data into atomic tables.
+* **Referential Integrity:** Enforcing strict parent-child logical links across entities using foreign keys.
+* **ACID Compliance Principles:** Ensuring transaction processing reliability, consistency, and structural durability.
+* **Aggregate Data Analysis:** Generating business metrics using grouped queries and summary metrics.
 
 ---
 
-### 3. Products Table
-Maintains the inventory catalog of available items in the store.
-* **Key Attributes:** Product Identifier, Product Name, Unit Price, Stock Quantity.
-* **Role:** Monitors live inventory stock levels, item pricing, and product catalog availability.
+## 🗂️ Database Schema Architecture
 
-<p align="center">
-  <img width="650" alt="Products Table Overview" src="https://github.com/user-attachments/assets/9090589c-af64-49e1-ae6a-c0d94e60467f" />
-</p>
-
----
-
-### 4. OrderDetails Table
-Functions as a junction (bridge) table resolving the many-to-many relationship between `Orders` and `Products`.
-* **Key Attributes:** Detail Identifier, Order Identifier (Foreign Key), Product Identifier (Foreign Key), Quantity Ordered, Subtotal Amount.
-* **Role:** Captures individual line items within an order, permitting single orders to hold multiple products with unique quantities.
-
-<p align="center">
-  <img width="500" alt="OrderDetails Table Overview" src="https://github.com/user-attachments/assets/50de2163-faef-44d1-810b-69f372866500" />
-</p>
-
----
-
-## 🔗 Entity Relationships & Integrity Constraints
+The architecture consists of **four primary entities** connected through relational mappings:
 
 <p align="center">
   <img width="850" alt="Entity Relationship Diagram" src="https://github.com/user-attachments/assets/9aa18c62-0bd1-4af5-a06f-8332f53e4d9f" />
 </p>
 
-### Key Principles Applied:
-* **Primary Keys:** Ensure that every entity row possesses a unique, immutable identifier preventing duplicate entries.
-* **Foreign Keys:** Enforce referential integrity constraints across the database:
-  * An order cannot exist without referencing a valid `CustomerID`.
-  * Order line items in `OrderDetails` must reference existing `OrderID` and `ProductID` records.
-* **Referential Integrity:** Guarantees that deleting or modifying records across tables maintains logical system stability without creating orphaned records.
+---
+
+### 📋 Detailed Entity Specifications
+
+#### 1. Customers Entity
+Stores identity, demographic, and contact profiles for shoppers registered on the platform.
+
+| Attribute | Field Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `CustomerID` | Integer | Primary Key | Unique identification number for each user. |
+| `Name` | String (100) | Required | Full registered name of the customer. |
+| `Email` | String (100) | Unique, Required | Primary contact and authentication address. |
+| `Address` | String (200) | Optional | Physical location for order fulfillment. |
+
+<p align="center">
+  <img width="850" alt="Customers Table Schema" src="https://github.com/user-attachments/assets/8ee44239-b4bf-49be-a353-a1aa46e52e09" />
+</p>
 
 ---
 
-## ⚙️ Data Management & Workflow Operations
+#### 2. Orders Entity
+Captures transactional metadata for every checkout session completed on the platform.
+
+| Attribute | Field Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `OrderID` | Integer | Primary Key | Unique transaction invoice number. |
+| `CustomerID` | Integer | Foreign Key | References `Customers(CustomerID)`. |
+| `OrderDate` | Date | Required | Timestamp of purchase completion. |
+| `TotalAmount` | Decimal (10,2) | Required | Total financial value of the order. |
 
 <p align="center">
-  <img width="850" alt="Data Flow Operations" src="https://github.com/user-attachments/assets/3ac812ec-85e2-4802-b4cf-736978af275a" />
+  <img width="600" alt="Orders Table Schema" src="https://github.com/user-attachments/assets/7a780568-802c-40b7-8127-a8d57d89e7bb" />
 </p>
-
-The project covers complete **CRUD** lifecycle management:
-
-* **Create (Insert):** Onboarding new customers, adding catalog products, and generating order records.
-* **Read (Select):** Retrieving customer order histories, filtering high-value items, and joining tables for consolidated reports.
-* **Update (Modify):** Adjusting stock counts after purchases, updating customer profile details, or revising order values.
-* **Delete (Remove):** Clearing inactive records or out-of-stock items while preserving foreign key dependencies.
 
 ---
 
-## 📊 Business Intelligence & Aggregate Analytics
+#### 3. Products Entity
+Maintains active store inventory, unit pricing, and stock status.
+
+| Attribute | Field Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `ProductID` | Integer | Primary Key | Unique catalog item number. |
+| `ProductName` | String (100) | Required | Commercial title of the product. |
+| `Price` | Decimal (10,2) | Required | Standard retail price per unit. |
+| `Stock` | Integer | Default 0 | Current quantity available in warehouse. |
 
 <p align="center">
-  <img width="600" alt="Aggregate Analytics" src="https://github.com/user-attachments/assets/d2f5ed8e-09da-4651-ab45-82d4bb9e35c4" />
+  <img width="650" alt="Products Table Schema" src="https://github.com/user-attachments/assets/9090589c-af64-49e1-ae6a-c0d94e60467f" />
 </p>
 
-The system leverages mathematical aggregate functions to extract actionable insights from raw relational data:
+---
 
-* **`SUM`:** Computes gross platform revenue across order subtotals.
-* **`AVG`:** Determines average order spend and item pricing averages.
-* **`MAX` / `MIN`:** Identifies peak order values, cheapest items, and highest price points in the catalog.
-* **`COUNT`:** Measures operational metrics such as product sales frequencies and total order volume.
+#### 4. OrderDetails Entity (Junction Table)
+Resolves the **Many-to-Many (N:M)** relationship between `Orders` and `Products`.
+
+| Attribute | Field Type | Constraint | Description |
+| :--- | :--- | :--- | :--- |
+| `OrderDetailID` | Integer | Primary Key | Unique line-item identifier. |
+| `OrderID` | Integer | Foreign Key | References `Orders(OrderID)`. |
+| `ProductID` | Integer | Foreign Key | References `Products(ProductID)`. |
+| `Quantity` | Integer | Required | Number of units purchased. |
+| `SubTotal` | Decimal (10,2) | Computed | Computed total price (`Price × Quantity`). |
+
+<p align="center">
+  <img width="500" alt="OrderDetails Table Schema" src="url?id=1user-attachments/assets/50de2163-faef-44d1-810b-69f372866500" />
+</p>
+
+---
+
+## ⚙️ Data Management Lifecycle (CRUD Patterns)
+
+<p align="center">
+  <img width="850" alt="CRUD Architecture Lifecycle" src="https://github.com/user-attachments/assets/3ac812ec-85e2-4802-b4cf-736978af275a" />
+</p>
+
+1. **Create (Data Insertion):** Onboarding customer accounts, inserting inventory items, and logging new orders.
+2. **Read (Data Retrieval):** Fetching purchase logs, filtering catalog items by price ranges, and combining data via relational JOINS.
+3. **Update (Data Modification):** Adjusting stock counts following sales, changing user contact info, or updating item prices.
+4. **Delete (Data Removal):** Clearing discontinued products or inactive user accounts while upholding referential integrity rules.
+
+---
+
+## 📊 Business Intelligence & Analytics Model
+
+<p align="center">
+  <img width="600" alt="Aggregate Analytics Engine" src="https://github.com/user-attachments/assets/d2f5ed8e-09da-4651-ab45-82d4bb9e35c4" />
+</p>
+
+The transactional data enables essential reporting metrics:
+
+* **Gross Platform Revenue (`SUM`):** Accumulates line-item subtotals across all transactions.
+* **Average Basket Value (`AVG`):** Evaluates mean customer spend per order session.
+* **Pricing Extrema (`MAX` / `MIN`):** Identifies highest-value orders and entry-level catalog pricing.
+* **Sales Frequency (`COUNT`):** Tracks volume counts to pinpoint high-demand catalog items.
+
+---
+
+## 🏬 Real-World Applications
+
+* **E-Commerce Order Management Systems (OMS)**
+* **Inventory Control & Warehouse Tracking**
+* **Customer Relationship Management (CRM) Data Pipeline**
+* **Business Intelligence & Sales Reporting Analytics**
 
 ---
 
 ## 📌 Domain Assumptions
 
-1. Every customer is assigned a unique system ID upon registration.
-2. An order must belong to a pre-existing, valid customer.
-3. Every catalog item maintains distinct unit pricing and real-time stock levels.
-4. An individual order can contain multiple unique products with individual line-item subtotals.
+1. Every customer account possesses a unique primary identifier.
+2. An order cannot exist without referencing a valid, pre-registered customer.
+3. Catalog stock levels dynamically reflect item availability.
+4. An individual transaction can incorporate multiple line-item products.
 
 ---
 
 ## 💡 Conclusion
 
-The **Data Digger** database project illustrates how relational database architecture converts raw operational data into structured, meaningful business insights. By applying primary and foreign key constraints, normalized schema design, and aggregate computation, the model serves as a foundation for scalable E-Commerce transaction platforms.
+The **Data Digger** framework demonstrates how relational schema engineering converts raw platform interactions into organized, accessible business insights. By applying foreign key dependencies, normalization standardizations, and aggregate reporting capabilities, this architecture serves as a scalable model for enterprise database systems.
