@@ -1,4 +1,5 @@
 # data-digger
+# data-digger
 
 # 🗄️ Data Digger — E-Commerce Database Management System
 
@@ -15,6 +16,16 @@ In a modern E-Commerce ecosystem, managing transactional data efficiently is cri
 * **Data Integrity & Relationships:** Establish parent-child links using Primary Keys and Foreign Keys.
 * **Core Operations:** Demonstrate data life cycle management through CRUD (Create, Read, Update, Delete) operations.
 * **Business Analytics:** Execute aggregate computations to generate key business performance indicators.
+
+---
+
+## ✨ Key Features
+
+* **3rd Normal Form (3NF) Compliance:** Organizes data to completely eliminate data duplication and update anomalies.
+* **Referential Integrity Enforcement:** Strictly enforces relationship rules via Foreign Keys so orphaned records cannot exist.
+* **Junction Entity Management:** Uses an `OrderDetails` table to handle Many-to-Many relationships cleanly between orders and items.
+* **Real-time Analytics Engine:** Evaluates business performance using aggregate metrics (`SUM`, `AVG`, `COUNT`, `MAX/MIN`).
+* **Complete CRUD Lifecycle:** Supports end-to-end data processing for customer profiles, catalog management, and transactional checkouts.
 
 ---
 
@@ -96,6 +107,21 @@ The project covers complete **CRUD** lifecycle management:
 
 ---
 
+## ⚖️ Advantages & Disadvantages
+
+### 🟢 Advantages
+* **Data Consistency:** Elimination of duplicate attributes ensures single-point data updates across all dependent queries.
+* **Scalability:** New business entities (such as Payment Systems, Shipping Partners, or Discount Coupons) can be connected seamlessly.
+* **Storage Optimization:** Normalization reduces unnecessary data duplication, conserving overall storage requirements.
+* **Accurate Auditing:** Clear separation of transactional subtotals (`OrderDetails`) and invoice totals (`Orders`) ensures precision in financial calculations.
+
+### 🔴 Disadvantages / Limitations
+* **Increased Join Complexity:** Fetching complete invoice views requires joining up to four tables, which can impact performance at massive scale.
+* **Basic Inventory Model:** Does not account for warehouse-level distributions, product variations (colors, sizes), or supplier tracking.
+* **Lack of Payment Logs:** Does not currently feature multi-method payment splits or transactional payment refund tracking tables.
+
+---
+
 ## 📊 Business Intelligence & Aggregate Analytics
 
 <p align="center">
@@ -108,6 +134,14 @@ The system leverages mathematical aggregate functions to extract actionable insi
 * **`AVG`:** Determines average order spend and item pricing averages.
 * **`MAX` / `MIN`:** Identifies peak order values, cheapest items, and highest price points in the catalog.
 * **`COUNT`:** Measures operational metrics such as product sales frequencies and total order volume.
+
+---
+
+## 🌐 Real-World Applications & Use Cases
+
+* **E-Commerce Marketplaces:** Foundational backend schema for tracking digital checkout carts and user orders.
+* **Retail Inventory Management:** Automated catalog updates to maintain live warehouse availability counts.
+* **Sales Analytics & Reporting:** Real-time generation of executive dashboards tracking gross margins and popular products.
 
 ---
 
