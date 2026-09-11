@@ -1,5 +1,4 @@
 # data-digger
-# data-digger
 
 # 🗄️ Data Digger — E-Commerce Database Management System
 
