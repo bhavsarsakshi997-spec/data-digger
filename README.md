@@ -142,16 +142,13 @@ The system leverages mathematical aggregate functions to extract actionable insi
 * **Retail Inventory Management:** Automated catalog updates to maintain live warehouse availability counts.
 * **Sales Analytics & Reporting:** Real-time generation of executive dashboards tracking gross margins and popular products.
 
----
-
+video link:
 ## 📌 Domain Assumptions
 
 1. Every customer is assigned a unique system ID upon registration.
 2. An order must belong to a pre-existing, valid customer.
 3. Every catalog item maintains distinct unit pricing and real-time stock levels.
 4. An individual order can contain multiple unique products with individual line-item subtotals.
-
----
 
 ## 💡 Conclusion
 
