@@ -1,161 +1,125 @@
 # data-digger
 
-Data Digger is a practical relational database project designed to demonstrate the fundamental concepts of SQL and database management in an E-Commerce environment. The project focuses on organizing customer, order, product, and order-related information into a structured database system.
+# 🗄️ Data Digger — E-Commerce Database Management System
 
-The main purpose of this project is to gain practical experience with relational databases, data manipulation, relationships between tables, and SQL operations. It demonstrates how an E-Commerce system can store and manage information efficiently while maintaining data consistency and integrity.
+**Data Digger** is a structured relational database project designed to demonstrate the core concepts of Relational Database Management Systems (RDBMS) in an E-Commerce environment. The system models a digital marketplace by systematically organizing customer data, product catalogs, transactional orders, and line-item details.
 
-The project is developed using a PostgreSQL relational database and follows a structured approach to database design. Different entities are separated into individual tables and connected through primary and foreign key relationships.
+---
 
-Project Objectives
+## 📌 Project Overview
 
-The main objectives of the Data Digger project are:
+In a modern E-Commerce ecosystem, managing transactional data efficiently is critical for maintaining order processing accuracy, tracking inventory levels, and generating business intelligence. **Data Digger** structures raw business information into normalized entities to prevent data redundancy and maintain strong referential integrity.
 
-1.To understand the fundamentals of relational database management.
-2.To design a structured database for an E-Commerce environment.
-3.To practice creating and managing database tables.
-4.To understand the use of primary keys and foreign keys.
-5.To perform basic data management operations.
+### Key Objectives
+* **Relational Schema Design:** Structure complex E-Commerce entities into individual normalized tables.
+* **Data Integrity & Relationships:** Establish parent-child links using Primary Keys and Foreign Keys.
+* **Core Operations:** Demonstrate data life cycle management through CRUD (Create, Read, Update, Delete) operations.
+* **Business Analytics:** Execute aggregate computations to generate key business performance indicators.
 
-Database Structure
+---
 
-The Data Digger project consists of four main relational tables:
+## 🗂️ Core Database Architecture & Tables
 
-1. Customers
+The database model consists of four core relational tables:
 
-The Customers table stores information about people who use the E-Commerce system.
+### 1. Customers Table
+Stores identity, demographic, and contact information for shoppers registered on the platform.
+* **Key Attributes:** Customer Identifier, Customer Name, Email Address, Physical Address.
+* **Role:** Uniquely identifies users and forms the primary entity for tracking purchase histories.
 
-It contains details such as:
+<p align="center">
+  <img width="850" alt="Customers Table Overview" src="https://github.com/user-attachments/assets/8ee44239-b4bf-49be-a353-a1aa46e52e09" />
+</p>
 
-1.Customer identification number
-2.Customer name
-3.Email address
-4.Customer address
+---
 
-<img width="855" height="242" alt="Screenshot 2026-09-11 091027" src="https://github.com/user-attachments/assets/8ee44239-b4bf-49be-a353-a1aa46e52e09" />
+### 2. Orders Table
+Captures high-level transaction data for every purchase placed on the platform.
+* **Key Attributes:** Order Identifier, Customer Identifier (Foreign Key), Order Placement Date, Total Transaction Amount.
+* **Role:** Links financial transactions back to specific customers while tracking order timestamps and total spend.
 
-Each customer is uniquely identified using a primary key. This ensures that every customer record has a unique identification value.
+<p align="center">
+  <img width="600" alt="Orders Table Overview" src="https://github.com/user-attachments/assets/7a780568-802c-40b7-8127-a8d57d89e7bb" />
+</p>
 
-The customer information is also connected with order information, allowing the system to determine which customer has placed a particular order.
+---
 
-2. Orders
+### 3. Products Table
+Maintains the inventory catalog of available items in the store.
+* **Key Attributes:** Product Identifier, Product Name, Unit Price, Stock Quantity.
+* **Role:** Monitors live inventory stock levels, item pricing, and product catalog availability.
 
-The Orders table stores information about customer orders.
+<p align="center">
+  <img width="650" alt="Products Table Overview" src="https://github.com/user-attachments/assets/9090589c-af64-49e1-ae6a-c0d94e60467f" />
+</p>
 
-It contains information such as:
+---
 
-1.Order identification number
-2.Customer identification number
-3.Date on which the order was placed
-4.Total amount of the order
+### 4. OrderDetails Table
+Functions as a junction (bridge) table resolving the many-to-many relationship between `Orders` and `Products`.
+* **Key Attributes:** Detail Identifier, Order Identifier (Foreign Key), Product Identifier (Foreign Key), Quantity Ordered, Subtotal Amount.
+* **Role:** Captures individual line items within an order, permitting single orders to hold multiple products with unique quantities.
 
-<img width="597" height="250" alt="Screenshot 2026-09-11 091730" src="https://github.com/user-attachments/assets/7a780568-802c-40b7-8127-a8d57d89e7bb" />
+<p align="center">
+  <img width="500" alt="OrderDetails Table Overview" src="https://github.com/user-attachments/assets/50de2163-faef-44d1-810b-69f372866500" />
+</p>
 
-Each order has a unique identification number. The customer identification value connects an order with the appropriate customer.
+---
 
-This relationship allows the database to maintain a connection between customers and their orders.
+## 🔗 Entity Relationships & Integrity Constraints
 
-3. Products
+<p align="center">
+  <img width="850" alt="Entity Relationship Diagram" src="https://github.com/user-attachments/assets/9aa18c62-0bd1-4af5-a06f-8332f53e4d9f" />
+</p>
 
-The Products table contains information about products available in the E-Commerce store.
+### Key Principles Applied:
+* **Primary Keys:** Ensure that every entity row possesses a unique, immutable identifier preventing duplicate entries.
+* **Foreign Keys:** Enforce referential integrity constraints across the database:
+  * An order cannot exist without referencing a valid `CustomerID`.
+  * Order line items in `OrderDetails` must reference existing `OrderID` and `ProductID` records.
+* **Referential Integrity:** Guarantees that deleting or modifying records across tables maintains logical system stability without creating orphaned records.
 
-It includes:
+---
 
-1.Product identification number
-2.Product name
-3.Product price
-4.Available stock quantity
+## ⚙️ Data Management & Workflow Operations
 
-<img width="662" height="235" alt="Screenshot 2026-09-11 092623" src="https://github.com/user-attachments/assets/9090589c-af64-49e1-ae6a-c0d94e60467f" />
+<p align="center">
+  <img width="850" alt="Data Flow Operations" src="https://github.com/user-attachments/assets/3ac812ec-85e2-4802-b4cf-736978af275a" />
+</p>
 
-Each product has a unique identification number. The stock information can be used to determine whether a product is currently available or out of stock.
+The project covers complete **CRUD** lifecycle management:
 
-The product price information can also be used for sorting, filtering, and price-based analysis.
+* **Create (Insert):** Onboarding new customers, adding catalog products, and generating order records.
+* **Read (Select):** Retrieving customer order histories, filtering high-value items, and joining tables for consolidated reports.
+* **Update (Modify):** Adjusting stock counts after purchases, updating customer profile details, or revising order values.
+* **Delete (Remove):** Clearing inactive records or out-of-stock items while preserving foreign key dependencies.
 
-4. OrderDetails
+---
 
-The OrderDetails table stores detailed information about the products included in individual orders.
+## 📊 Business Intelligence & Aggregate Analytics
 
-<img width="477" height="168" alt="image" src="https://github.com/user-attachments/assets/50de2163-faef-44d1-810b-69f372866500" />
+<p align="center">
+  <img width="600" alt="Aggregate Analytics" src="https://github.com/user-attachments/assets/d2f5ed8e-09da-4651-ab45-82d4bb9e35c4" />
+</p>
 
-It contains:
+The system leverages mathematical aggregate functions to extract actionable insights from raw relational data:
 
-1.Order detail identification number
-2.Order identification number
-3.Product identification number
-4.Quantity ordered
-5.Subtotal amount
+* **`SUM`:** Computes gross platform revenue across order subtotals.
+* **`AVG`:** Determines average order spend and item pricing averages.
+* **`MAX` / `MIN`:** Identifies peak order values, cheapest items, and highest price points in the catalog.
+* **`COUNT`:** Measures operational metrics such as product sales frequencies and total order volume.
 
-This table acts as a connection between the Orders and Products tables.
+---
 
-For example, one order can contain multiple products, and the OrderDetails table records which products belong to that order along with their quantities and subtotal values.
+## 📌 Domain Assumptions
 
-5.Database Relationships
+1. Every customer is assigned a unique system ID upon registration.
+2. An order must belong to a pre-existing, valid customer.
+3. Every catalog item maintains distinct unit pricing and real-time stock levels.
+4. An individual order can contain multiple unique products with individual line-item subtotals.
 
-<img width="1536" height="1024" alt="ChatGPT Image Sep 11, 2026, 10_22_21 AM" src="https://github.com/user-attachments/assets/9aa18c62-0bd1-4af5-a06f-8332f53e4d9f" />
+---
 
-6.Primary Keys
+## 💡 Conclusion
 
-A Primary Key is a field that uniquely identifies each record in a table.
-
-7.Foreign Keys
-
-1.A Foreign Key is used to create a relationship between two tables.
-
-2.The project uses foreign keys to maintain connections between related data.
-
-3.The Orders table uses the customer identification value to connect with the Customers table.
-
-4.The OrderDetails table uses order and product identification values to connect with the Orders and Products tables.
-
-5.Foreign keys help maintain referential integrity, which means that related records must correspond to valid records in the referenced tables.
-
-8.Data Management
-<img width="1536" height="1024" alt="ChatGPT Image Sep 11, 2026, 10_26_10 AM" src="https://github.com/user-attachments/assets/3ac812ec-85e2-4802-b4cf-736978af275a" />
-
-The project demonstrates the basic CRUD concept of database management.
-
-CRUD represents:
-
-1.Create – Adding new records to the database.
-2.Read – Retrieving stored information.
-3.Update – Modifying existing information.
-4.Delete – Removing unwanted records.
-
-These operations are essential for managing real-world database systems.
-
-In this project, CRUD operations are demonstrated across customer, order, and product information.
-
-9.Aggregate Functions
-
-Aggregate functions are used to perform calculations on multiple records.
-
-The project demonstrates the use of important aggregate functions such as:
-
-<img width="577" height="107" alt="Screenshot 2026-09-11 091825" src="https://github.com/user-attachments/assets/d2f5ed8e-09da-4651-ab45-82d4bb9e35c4" />
-
-1.SUM – Used to calculate a total value.
-2.MAX – Used to identify the highest value.
-3.MIN – Used to identify the lowest value.
-4.AVG – Used to calculate an average value.
-5.COUNT – Used to count records.
-
-These functions help generate useful business information from the database.
-10.Assumptions
-
-The project is based on the following assumptions:
-
-1.Each customer has a unique identification number.
-2.Each order belongs to an existing customer.
-3.Each product has a unique identification number.
-4.An order can contain one or more products.
-5.Order details maintain the quantity and subtotal for purchased products.
-6.Product stock represents the currently available quantity.
-
-11.Conclusion
-
-Data Digger provides practical experience in designing and managing a relational database for an E-Commerce environment. The project demonstrates how different types of information can be organized into separate but connected tables.
-
-By using customers, orders, products, and order details, the system represents a simplified real-world E-Commerce database. Primary keys and foreign keys maintain relationships and data integrity, while CRUD operations provide basic data management capabilities.
-
-The use of filtering, sorting, aggregate functions, and table relationships allows the stored data to be transformed into useful information. Overall, this project provides a strong foundation for understanding SQL, relational database design, and practical database management.
-
+The **Data Digger** database project illustrates how relational database architecture converts raw operational data into structured, meaningful business insights. By applying primary and foreign key constraints, normalized schema design, and aggregate computation, the model serves as a foundation for scalable E-Commerce transaction platforms.
